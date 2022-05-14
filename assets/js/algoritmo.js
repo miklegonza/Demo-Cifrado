@@ -7,7 +7,7 @@ const n = 127; // base modular
 const A = 7; // clave privada emisor (Bob)
 const B = 9; // clave privada receptor (Alice)
 
-var K = 55; // clave
+var K = 53; // clave
 var mensajeASCIICifrado = [];
 var mensajeASCIIDescifrado = [];
 var mensajeCifrado = []; 

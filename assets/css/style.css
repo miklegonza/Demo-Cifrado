@@ -1,0 +1,106 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Poppins&family=Roboto+Mono&display=swap');
+
+/* Globales */
+:root { 
+    --primario: #30929F;
+    --secundario: #848484;
+    --background: #fff;
+    --gris: #E4E4E4;
+    --white-text: rgb(238, 240, 245);
+    --titulo: 'Kanit', sans-serif;
+    --text: 'Poppins', sans-serif;
+    --console: 'Roboto Mono', monospace;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primario);
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    margin: 0;
+}
+
+.divcito {
+    background-color: #E4E4E4;
+    margin: auto;
+    padding: 2rem;
+    border: 2px solid #ccc;
+    text-align:center;
+    width: 400px;
+    height: 500px;
+}
+
+.titleregis{
+    font-family: var(--titulo);
+    font-Size: 40px;
+}
+
+.formulario{
+
+background-color: #d6cece;
+margin: auto;
+padding: 1rem;
+border: 1px solid #ccc;
+text-align:center;
+width:350px;
+}
+
+.nom{
+    background-color: #e7dede;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    text-align:center;
+    width:300px;
+}
+
+
+.ape{
+    background-color: #e7dede;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    text-align:center;
+    width:300px;
+}
+
+.email{
+    background-color: #e7dede;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    text-align:center;
+    width:300px;
+}
+
+.butreg{
+    background-color: #30929F;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:350px;
+}
+
+.butini{
+    background-color: #5c5c5e; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:350px;
+}
+
+.genera{
+   color: #9e9d9d;
+}
