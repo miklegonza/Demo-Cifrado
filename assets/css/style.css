@@ -199,5 +199,15 @@ a {
    font-family: var(--titulo);
 }
 
+.generaa {
+    color: var(--secundario);
+    font-family: var(--titulo);
+ }
+
+
+.genera{
+    text-align: right;
+}
+
 /* Fin registrar */
 
