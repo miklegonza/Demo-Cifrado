@@ -62,4 +62,3 @@ descifrar(mensajeCifrado);
 console.log("\nASCII descrifrado: " + mensajeASCIIDescifrado);
 console.log("Mensaje descifrado: " + mensajeDescifrado.join(''));
 
-

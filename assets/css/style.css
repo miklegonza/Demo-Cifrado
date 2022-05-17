@@ -160,16 +160,15 @@ a {
 /* Inicio registrar */
 .body-azul {
     background-color: var(--primario);
-    padding: 5.5rem;
+    padding: 3rem;
 }
 
 .divcito {
     background-color: var(--gris-claro);
     margin: auto;
-    padding: 1.3rem;
+    padding: 1.5rem;
     text-align: center;
     width: 400px;
-    height: 500px;
 }
 
 .titulo{
@@ -179,7 +178,6 @@ a {
 
 .formulario{
     margin: auto;
-    width:350px;
 }
 
 .info-usuario {

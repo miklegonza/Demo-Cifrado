@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <title>Registro</title>
+</head>
+
+<body class="body-azul">
+    <div class="divcito">
+        <form action="" method="post" class="formulario">
+            <h1 class="titulo">Registrar usuario</h1>
+            <input type="text" name="name" id="name" placeholder="Nombres" class="info-usuario" required>
+            <input type="text" name="last" id="last" placeholder="Apellidos" class="info-usuario" required>
+            <input type="text" name="email" id="email" placeholder="Email" class="info-usuario" required>
+            <input type="password" name="pass" id="pass" placeholder="Contraseña" class="info-usuario" required>
+            
+            <p class="generaa">
+                * Se generará una clase de sesión que previamente será 
+                enviada a su correo electrónico
+            </p>
+            
+            <input type="submit" value="Registrar" class="btn azul login">
+        </form>
+        <a href="login"><button class="btn gris login">Iniciar sesión</button></a>
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => window.location = '/<%= ruta %>');
+        </script>
+    <% } %>
+</body>
+
+</html>

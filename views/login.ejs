@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <title>Cifrador de archivos</title>
+</head>
+
+<body class="body-azul">
+    <div class="divcito">
+        <form action="/auth" method="post" class="formulario">
+            <h1 class="titulo">Iniciar sesión</h1>
+            <input type="text" name="email" id="email" placeholder="Correo" class="info-usuario" required>
+            <input type="password" name="pass" id="pass" placeholder="Contraseña" class="info-usuario" required>
+            
+            <p class="genera">
+                * Me siento bien :D <input type = "checkbox">
+            </p>
+            
+            <input type="submit" value="Iniciar sesión" class="btn azul login">
+        </form>
+        <a href="register"><button class="btn gris login">Registrarse</button></a>    
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => window.location = '/<%= ruta %>');
+        </script>
+    <% } %>
+</body>
+
+</html>

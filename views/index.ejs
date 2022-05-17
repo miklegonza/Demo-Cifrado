@@ -6,20 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="./assets/js/algoritmo.js"></script>
+    <link rel="stylesheet" href="resources/css/style.css">
+    <!-- <script src="resources/js/algoritmo.js"></script> -->
     <title>Cifrador de archivos</title>
 </head>
 
 <body>
     <header>
         <div class="inbox">
-            <a href="index.html">
-                <img src="./assets/img/bx-chat.svg" alt="Logo" class="logo">
+            <a href="#">
+                <img src="resources/img/bx-chat.svg" alt="Logo" class="logo">
                 <h1 class="header-text">INBOX</h1>
             </a>
         </div>
         <div class="buscar"></div>
+        <% if (login) { %>
+            <h2>EL usuario conectado es: <%= name %></h2>
+            <a href="/logout">Cerrar sesión</a>
+        <% } %>
         <a href="#" class="settings">"icon"</a>
     </header>
 
@@ -36,7 +40,7 @@
             <form action="#" method="post">
                 <input type="submit" value="Enviar" class="btn azul dash">
                 <button class="btn gris dash">Descartar</button>
-                <input type="text" name="message" class="barra">
+                <input type="text" name="message" class="barra" required>
             </form>
         </div>
     </div>
