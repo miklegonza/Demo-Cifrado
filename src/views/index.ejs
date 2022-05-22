@@ -23,7 +23,10 @@
         <% if (login) { %>
             <h2>EL usuario conectado es: <%= name %></h2>
             <a href="/logout">Cerrar sesión</a>
+        <% } else { %>
+            <script>window.location = '/login';</script>
         <% } %>
+
         <a href="#" class="settings">"icon"</a>
     </header>
 
@@ -44,6 +47,7 @@
             </form>
         </div>
     </div>
+    
 </body>
 
 </html>
