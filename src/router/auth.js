@@ -13,7 +13,7 @@ router.post('/auth', async(req, res) => {
     };
     user.clave = await helper.encryptPass(user.clave);
     if (email && pass) {
-        pool.query('SELECT * FROM persona WHERE correo = ?', [email], async(error, result) => {
+        pool.query('SELECT * FROM persona WHERE correo = ?', [email], async (error, result) => {
             if (result.length == 0 || !(await helper.comparePass(pass, result[0].clave))) {
                 res.render('login', {
                     alert: true,
