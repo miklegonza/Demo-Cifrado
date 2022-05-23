@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet">
     <link rel="stylesheet" href="resources/css/style.css">
-    <!-- <script src="resources/js/algoritmo.js"></script> -->
     <title>Cifrador de archivos</title>
 </head>
 
@@ -20,8 +19,13 @@
             </a>
         </div>
         <div class="buscar"></div>
+        
+        <form action="/add-contact" method="post">
+            <input type="text">
+            <input type="submit" hidden="true">
+        </form>
+
         <% if (login) { %>
-            <h2>EL usuario conectado es: <%= name %></h2>
             <a href="/logout">Cerrar sesión</a>
         <% } else { %>
             <script>window.location = '/login';</script>
@@ -40,10 +44,10 @@
     <div class="content">
         <div class="messages"></div>
         <div class="message-bar">
-            <form action="#" method="post">
+            <form action="/cypher" method="post">
                 <input type="submit" value="Enviar" class="btn azul dash">
                 <button class="btn gris dash">Descartar</button>
-                <input type="text" name="message" class="barra" required>
+                <input type="text" name="message" class="barra" autofocus required>
             </form>
         </div>
     </div>

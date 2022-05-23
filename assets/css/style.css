@@ -161,6 +161,8 @@ a {
 .body-azul {
     background-color: var(--primario);
     padding: 3rem;
+    width: 100vw;
+    height: 100vh;
 }
 
 .divcito {

@@ -30,6 +30,7 @@ app.use('/resources', express.static(__dirname + '/assets'));
 // Routes
 app.use('/', require('./router/signup'));
 app.use('/', require('./router/auth'));
+app.use('/', require('./router/cypher'));
 
 // Esto no sé donde va
 app.get('/', (req, res) => {
