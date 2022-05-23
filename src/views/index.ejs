@@ -20,8 +20,8 @@
         </div>
         <div class="buscar"></div>
         
-        <form action="/add-contact" method="post">
-            <input type="text">
+        <form action="/add-contact" method="post" >
+            <input type="text" name ="name" class = "barra" placeholder="   agregar usuario">
             <input type="submit" hidden="true">
         </form>
 
@@ -31,7 +31,7 @@
             <script>window.location = '/login';</script>
         <% } %>
 
-        <a href="#" class="settings">"icon"</a>
+        <a class="settings"><img src="resources/img/Tuerquilla.png" alt="" width="50px"></a>
     </header>
 
     <div class="sidebar">
@@ -47,7 +47,7 @@
             <form action="/cypher" method="post">
                 <input type="submit" value="Enviar" class="btn azul dash">
                 <button class="btn gris dash">Descartar</button>
-                <input type="text" name="message" class="barra" autofocus required>
+                <input type="text" name="message" class="barra" autofocus required placeholder="    Escribe tu mensaje">
             </form>
         </div>
     </div>
