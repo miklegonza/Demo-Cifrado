@@ -8,6 +8,11 @@
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet">
     <link rel="stylesheet" href="resources/css/style.css">
     <title>Cifrador de archivos</title>
+    <script>
+        function asignar() {
+            document.forms['form-asignar'].submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -19,39 +24,67 @@
             </a>
         </div>
         <div class="buscar"></div>
-        
-        <form action="/add-contact" method="post" >
-            <input type="text" name ="name" class = "barra" placeholder="   agregar usuario">
+
+        <form action="/add-contact" method="post">
+            <input type="text" name="email" class="barra" placeholder="Agregar usuario">
             <input type="submit" hidden="true">
         </form>
-
-        <% if (login) { %>
-            <a href="/logout">Cerrar sesión</a>
-        <% } else { %>
+        <% if (typeof login == "defined" ) { %>
             <script>window.location = '/login';</script>
+        <% } else { %>
+            <a href="/logout">Cerrar sesión</a>
         <% } %>
-
         <a class="settings"><img src="resources/img/Tuerquilla.png" alt="" width="50px"></a>
     </header>
 
     <div class="sidebar">
         <div class="new-message"></div>
         <ul class="lista">
-            <li>Item</li>
+            <% if (typeof contactos != "undefined" ) {
+                contactos.forEach((contacto) => { %>
+                    <form id="form-asignar" action="/decipher" method="post">
+                        <a href="javascript: asignar()" class="vinculo">
+                            <input type="text" name="receptor" value="<%= contacto.nombre %>" hidden>
+                            <li><%= contacto.nombre %></li>
+                        </a>
+                    </form>
+                <% }); %>
+            <% } %>
         </ul>
     </div>
+    
 
     <div class="content">
-        <div class="messages"></div>
+        <div class="messages">
+            <% if (typeof resultado != "undefined" ) { 
+                resultado.forEach((contacto) => { %>
+                    <p><%= contacto.resultado %></p>
+                <% }); %>
+            <% } %>
+
+        </div>
         <div class="message-bar">
             <form action="/cypher" method="post">
                 <input type="submit" value="Enviar" class="btn azul dash">
                 <button class="btn gris dash">Descartar</button>
-                <input type="text" name="message" class="barra" autofocus required placeholder="    Escribe tu mensaje">
+                <input type="text" name="message" placeholder="Escribe tu mensaje" class="barra" autofocus required>
             </form>
         </div>
     </div>
-    
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => window.location = '/<%= ruta %>');
+        </script>
+        <% } %>
+
 </body>
 
 </html>

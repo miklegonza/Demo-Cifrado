@@ -1,7 +1,7 @@
 const { Router } = require('express');
+const cifrar = require('../lib/algoritmoCifrado');
 const pool = require('../db');
 const router = Router();
-const cifrar = require('../lib/algoritmo');
 
 router.get('/cypher');
 
@@ -26,10 +26,14 @@ router.post('/cypher', async (req, res) => {
                 timer: 3000,
                 ruta: ""
             });
-            res.redirect('/');
         }
     });
 });
 
 
 module.exports = router;
+
+// select del id de contactos caundo el id logged 
+//clave usuario seleccionado
+//Clave del usuario logueado
+// Clave compartida

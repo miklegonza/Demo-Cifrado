@@ -10,6 +10,9 @@
 </head>
 
 <body class="body-azul">
+    <% if (typeof login != "undefined" ) { %>
+        <script>window.location = '/';</script>
+    <% } %>
     <div class="divcito">
         <form action="/auth" method="post" class="formulario">
             <h1 class="titulo">Iniciar sesión</h1>

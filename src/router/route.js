@@ -1,8 +1,153 @@
 const { Router } = require('express');
+const cifrar = require('../lib/algoritmoCifrado');
+const descifrar = require('../lib/algoritmoDescifrado');
+const pool = require('../db');
 const router = Router();
 
-//router.get('/', (req, res) => res.render('index'));
-router.get('/login', (req, res) => res.render('login'));
-router.get('/register', (req, res) => res.render('register'));
+var contactos = [];
+var rec;
+
+router.get('/', (req, res) => {
+    if (req.session.logged) {
+        const identificador = req.session.identificador;
+        pool.query('SELECT persona.id, persona.nombre, persona.correo, persona.llave ' +
+            'FROM persona WHERE persona.id IN ' +
+            '(SELECT receptor FROM contacto WHERE emisor = ?)', [identificador], async (error, result) => {
+                contactos = [];
+                if (result.length > 0) result.forEach(element => contactos.push({nombre: element.nombre, llave: element.llave}));
+                console.log(contactos);
+                res.render('index', {
+                    login: true,
+                    name: req.session.nombre,
+                    contactos
+                });
+            });
+    } else {
+        res.render('index', {
+            login: false,
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Debe iniciar sesión",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "login"
+        });
+    }
+});
+
+router.get('/asignar');
+
+router.post('/asignar', async (req, res) => {
+    pool.query('SELECT detalle FROM mensaje WHERE')
+    const mensajeCifrado = "";
+    res.render('', mensajeCifrado);
+});
+
+router.get('/cypher');
+
+router.post('/cypher', async (req, res) => {
+    if (req.session.logged) {
+        const { message } = req.body;
+        const llaveEmisor = req.session.llave;
+        const llaveReceptor = 17;
+        let compartida, idContacto, cifrado;
+        
+        const params = {
+            emisor: req.session.identificador,
+            receptor: 2
+        };
+        pool.query('SELECT id, clave_compartida FROM contacto WHERE emisor = ? AND receptor = ?', [params.emisor, params.receptor], async (error, result) => {
+            if (error) console.error(error);
+            if (result.length > 0) {
+                idContacto = result[0].id;
+                compartida = result[0].clave_compartida;
+                cifrado = cifrar(message, compartida, llaveEmisor, llaveReceptor);
+            }
+            pool.query('INSERT INTO mensaje SET detalle = ?', [cifrado], async (error, result) => {
+                if (error) console.error(error);
+                pool.query('SELECT id FROM mensaje WHERE detalle = ?', [cifrado], async (error, result) => {
+                    if (result.length > 0) {
+                        const relacion = {
+                            relacion_contacto: idContacto,
+                            mensaje: result[0].id
+                        };
+                        pool.query('INSERT INTO contacto_mensaje SET ?', [relacion], async (error, result) => {
+                            if(error) console.error(error);
+                            res.render('index', {
+                                alert: true,
+                                alertTitle: "Éxito",
+                                alertMessage: "Mensaje cifrado y enviado",
+                                alertIcon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                ruta: null
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    }
+});
+
+router.get('/decipher');
+
+router.post('/decipher', async (req, res) => {
+    if (req.session.logged) {
+        const llaveEmisor = 17;
+        const llaveReceptor = req.session.llave;
+        let idContacto, compartida, descifrado;
+        
+        const params = {
+            emisor: req.session.identificador,
+            receptor: 2
+        };
+        pool.query('SELECT id, clave_compartida FROM contacto WHERE emisor = ? AND receptor = ?', [params.emisor, params.receptor], async (error, result) => {
+            if (error) console.error(error);
+            if (result.length > 0) {
+                idContacto = result[0].id;
+                compartida = result[0].clave_compartida;
+            }
+            pool.query('SELECT relacion_contacto FROM contacto_mensaje WHERE relacion_contacto = ?', [idContacto], async (error, result) => {
+                if (error) console.error(error);
+                const relacion_contacto = result[0].relacion_contacto;
+                pool.query('SELECT mensaje.detalle, contacto_mensaje.relacion_contacto FROM contacto_mensaje INNER JOIN mensaje ON contacto_mensaje.mensaje = mensaje.id AND relacion_contacto = ?', [relacion_contacto], async (error, result) => {
+                    if (result.length > 0) {
+                        console.log(result[0]);
+                        descifrado = descifrar(result[0].detalle, compartida, llaveEmisor, llaveReceptor);
+                        const resultado = [descifrado];
+                        res.render('index', {resultado});
+                        /*const relacion = {
+                            relacion_contacto: idContacto,
+                            mensaje: result[0].id
+                        };
+                        pool.query('INSERT INTO contacto_mensaje SET ?', [relacion], async (error, result) => {
+                            if(error) console.error(error);
+                            res.render('index', {
+                                alert: true,
+                                alertTitle: "Éxito",
+                                alertMessage: "Mensaje cifrado y enviado",
+                                alertIcon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                ruta: null
+                            });
+                        });*/
+                    } else {
+                        console.log('No hay registros');
+                    }
+                });
+            });
+        });
+    }
+});
+
 
 module.exports = router;
+
+
+// select del id de contactos caundo el id logged
+//clave usuario seleccionado
+//Clave del usuario logueado
+// Clave compartida
