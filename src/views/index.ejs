@@ -38,9 +38,8 @@
         <div class="new-message"></div>
         <ul class="lista">
             <% if (typeof contactos !="undefined" ) { %>
-                <% contactos.forEach((contacto)=> { %>
-                    <a href="/?user=<%= contacto.nombre%>" class="vinculo">
-                        <input type="text" name="receptor" value="<%= contacto.nombre %>" hidden />
+                <% contactos.forEach((contacto) => { %>
+                    <a href="/?user=<%= contacto.nombre %>" class="vinculo">
                         <li><%= contacto.nombre %></li>
                     </a>
                 <% }); %>
@@ -50,10 +49,10 @@
 
     <div class="content">
         <div class="messages">
-            <% if (typeof resultado != "undefined" ){%>
-                <h3><%= resultado %></h3>
-            <% } else {%>
-                <h3>No has seleccionado ningun usuario</h3>
+            <% if (typeof resultados != "undefined") { %>
+                <% resultados.forEach(resultado => { %>
+                    <p class="message"><%= resultado %></p>
+                <% }); %>
             <% } %>
         </div>
         <div class="message-bar">

@@ -18,16 +18,7 @@ const descifrar = function (cifrado, K, A, B) {
         );
         mensajeDescifrado.push(String.fromCharCode(mensajeASCIIDescifrado[i]));
     }
-    console.log("\n" + cifrado);
-    console.log("ASCII descrifrado: " + mensajeASCIIDescifrado);
-    console.log("Mensaje descifrado: " + mensajeDescifrado.join(""));
     return mensajeDescifrado.join("");
 };
-
-/*
-descifrar(mensajeCifrado);
-console.log("\nASCII descrifrado: " + mensajeASCIIDescifrado);
-console.log("Mensaje descifrado: " + mensajeDescifrado.join(''));
-*/
 
 module.exports = descifrar;

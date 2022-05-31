@@ -5,7 +5,6 @@ const pool = require("../db");
 const router = Router();
 
 var contactos = [];
-var rec;
 
 router.get("/", async (req, res) => {
     const { user } = req.query;
@@ -26,7 +25,7 @@ router.get("/", async (req, res) => {
                     llave: contacto.llave,
                 })
             );
-            let descifrado;
+        let descifrado = [];
         if (user) {
             const llaveEmisor = 17;
             const llaveReceptor = req.session.llave;
@@ -49,28 +48,32 @@ router.get("/", async (req, res) => {
                 [idContacto]
             );
             const relacion_contacto = contacto_mensaje.relacion_contacto;
-            const [mensajes] = await pool.query(
+            const mensajes = await pool.query(
                 "SELECT mensaje.detalle, contacto_mensaje.relacion_contacto FROM contacto_mensaje INNER JOIN mensaje ON contacto_mensaje.mensaje = mensaje.id AND relacion_contacto = ?",
                 [relacion_contacto]
             );
             if (mensajes) {
-                descifrado = descifrar(
-                    mensajes.detalle,
-                    compartida,
-                    llaveEmisor,
-                    llaveReceptor
-                );
+                mensajes.forEach((mensaje) => {
+                    descifrado.push(
+                        descifrar(
+                            mensaje.detalle,
+                            compartida,
+                            llaveEmisor,
+                            llaveReceptor
+                        )
+                    );
+                });
             } else {
                 console.log("No hay registros");
             }
         }
-        const resultado = [descifrado];
+        const resultados = descifrado;
         res.render("", {
             login: true,
             name: req.session.nombre,
             contactos,
             user,
-            resultado,
+            resultados,
         });
     } else {
         res.render("index", {
@@ -103,69 +106,48 @@ router.post("/cypher", async (req, res) => {
         const llaveReceptor = 17;
         let compartida, idContacto, cifrado;
 
-        const params = {
+        const values = {
             emisor: req.session.identificador,
             receptor: 2,
         };
-        pool.query(
+        const [contacto] = await pool.query(
             "SELECT id, clave_compartida FROM contacto WHERE emisor = ? AND receptor = ?",
-            [params.emisor, params.receptor],
-            async (error, result) => {
-                if (error) console.error(error);
-                if (result.length > 0) {
-                    idContacto = result[0].id;
-                    compartida = result[0].clave_compartida;
-                    cifrado = cifrar(
-                        message,
-                        compartida,
-                        llaveEmisor,
-                        llaveReceptor
-                    );
-                }
-                pool.query(
-                    "INSERT INTO mensaje SET detalle = ?",
-                    [cifrado],
-                    async (error, result) => {
-                        if (error) console.error(error);
-                        pool.query(
-                            "SELECT id FROM mensaje WHERE detalle = ?",
-                            [cifrado],
-                            async (error, result) => {
-                                if (result.length > 0) {
-                                    const relacion = {
-                                        relacion_contacto: idContacto,
-                                        mensaje: result[0].id,
-                                    };
-                                    pool.query(
-                                        "INSERT INTO contacto_mensaje SET ?",
-                                        [relacion],
-                                        async (error, result) => {
-                                            if (error) console.error(error);
-                                            res.render("index", {
-                                                alert: true,
-                                                alertTitle: "Éxito",
-                                                alertMessage:
-                                                    "Mensaje cifrado y enviado",
-                                                alertIcon: "success",
-                                                showConfirmButton: false,
-                                                timer: 3000,
-                                                ruta: null,
-                                            });
-                                        }
-                                    );
-                                }
-                            }
-                        );
-                    }
-                );
-            }
+            [values.emisor, values.receptor]
         );
+        if (contacto) {
+            idContacto = contacto.id;
+            compartida = contacto.clave_compartida;
+            cifrado = cifrar(message, compartida, llaveEmisor, llaveReceptor);
+        }
+        const insert1 = await pool.query(
+            "INSERT INTO mensaje SET detalle = ?",
+            [cifrado]
+        );
+        const [mensaje] = await pool.query(
+            "SELECT id FROM mensaje WHERE detalle = ?",
+            [cifrado]
+        );
+        if (mensaje) {
+            const relacion = {
+                relacion_contacto: idContacto,
+                mensaje: mensaje.id,
+            };
+            const insert2 = await pool.query(
+                "INSERT INTO contacto_mensaje SET ?",
+                [relacion]
+            );
+            res.render("index", {
+                alert: true,
+                alertTitle: "Éxito",
+                alertMessage: "Mensaje cifrado y enviado",
+                alertIcon: "success",
+                showConfirmButton: false,
+                timer: 3000,
+                ruta: "",
+            });
+        }
     }
 });
-
-async function geteso() {
-    return rows;
-}
 
 module.exports = router;
 
