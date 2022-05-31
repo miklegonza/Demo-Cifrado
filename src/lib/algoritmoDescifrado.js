@@ -3,25 +3,25 @@
 
 const n = 2700; // base modular
 
-var mensajeASCIIDescifrado = [];
-var mensajeDescifrado = [];
-
 /**
  * Aplica la función de descifrado y convierte el mensaje a letras desde el código ASCII.
- * 
+ *
  * @param cifrado Mensaje por descifrar
  */
- const descifrar = function(cifrado, K, A, B) {
+const descifrar = function (cifrado, K, A, B) {
+    var mensajeASCIIDescifrado = [];
+    var mensajeDescifrado = [];
     let arreglo = cifrado.split(",");
-    console.log(arreglo);
     for (let i = 0; i < arreglo.length; i++) {
-        mensajeASCIIDescifrado.push(((arreglo[i] - K - 3 - n) % (n * 3)) - (A * B));
+        mensajeASCIIDescifrado.push(
+            ((arreglo[i] - K - 3 - n) % (n * 3)) - A * B
+        );
         mensajeDescifrado.push(String.fromCharCode(mensajeASCIIDescifrado[i]));
     }
-    console.log(cifrado);
-    console.log("\nASCII descrifrado: " + mensajeASCIIDescifrado);
-    console.log("Mensaje descifrado: " + mensajeDescifrado.join(''));
-    return mensajeASCIIDescifrado.join('');
+    console.log("\n" + cifrado);
+    console.log("ASCII descrifrado: " + mensajeASCIIDescifrado);
+    console.log("Mensaje descifrado: " + mensajeDescifrado.join(""));
+    return mensajeDescifrado.join("");
 };
 
 /*
