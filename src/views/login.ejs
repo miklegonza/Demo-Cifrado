@@ -10,11 +10,14 @@
 </head>
 
 <body class="body-azul">
+    <% if (typeof login != "undefined" ) { %>
+        <script>window.location = '/';</script>
+    <% } %>
     <div class="divcito">
         <form action="/auth" method="post" class="formulario">
             <h1 class="titulo">Iniciar sesión</h1>
-            <input type="text" name="email" id="email" placeholder="Correo" class="info-usuario" autofocus required>
-            <input type="password" name="pass" id="pass" placeholder="Contraseña" class="info-usuario" required>
+            <input type="text" name="email" id="email" placeholder="Correo" value="Mikle" class="info-usuario" autofocus required>
+            <input type="password" name="pass" id="pass" placeholder="Contraseña" value="Mikle" class="info-usuario" required>
             
             <p class="genera">
                 * Me siento bien :D <input type = "checkbox">

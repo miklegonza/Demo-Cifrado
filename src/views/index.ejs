@@ -2,11 +2,11 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet">
-    <link rel="stylesheet" href="resources/css/style.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet" />
+    <link rel="stylesheet" href="resources/css/style.css" />
     <title>Cifrador de archivos</title>
 </head>
 
@@ -14,44 +14,68 @@
     <header>
         <div class="inbox">
             <a href="#">
-                <img src="resources/img/bx-chat.svg" alt="Logo" class="logo">
+                <img src="resources/img/bx-chat.svg" alt="Logo" class="logo" />
                 <h1 class="header-text">INBOX</h1>
             </a>
         </div>
         <div class="buscar"></div>
-        
-        <form action="/add-contact" method="post" >
-            <input type="text" name ="name" class = "barra" placeholder="   agregar usuario">
-            <input type="submit" hidden="true">
+
+        <form action="/add-contact" method="post">
+            <input type="text" name="email" class="barra" placeholder="Agregar usuario" />
+            <input type="submit" hidden="true" />
         </form>
-
-        <% if (login) { %>
-            <a href="/logout">Cerrar sesión</a>
+        <% if (typeof login=="defined" ) { %>
+            <script>
+                window.location = "/login";
+            </script>
         <% } else { %>
-            <script>window.location = '/login';</script>
+            <a href="/logout">Cerrar sesión</a>
         <% } %>
-
-        <a class="settings"><img src="resources/img/Tuerquilla.png" alt="" width="50px"></a>
+        <a class="settings"><img src="resources/img/Tuerquilla.png" alt="" width="50px" /></a>
     </header>
 
     <div class="sidebar">
         <div class="new-message"></div>
         <ul class="lista">
-            <li>Item</li>
+            <% if (typeof contactos !="undefined" ) { %>
+                <% contactos.forEach((contacto) => { %>
+                    <a href="/?user=<%= contacto.nombre %>" class="vinculo">
+                        <li><%= contacto.nombre %></li>
+                    </a>
+                <% }); %>
+            <% } %>
         </ul>
     </div>
 
     <div class="content">
-        <div class="messages"></div>
+        <div class="messages">
+            <% if (typeof resultados != "undefined") { %>
+                <% resultados.forEach(resultado => { %>
+                    <p class="message"><%= resultado %></p>
+                <% }); %>
+            <% } %>
+        </div>
         <div class="message-bar">
             <form action="/cypher" method="post">
-                <input type="submit" value="Enviar" class="btn azul dash">
+                <input type="submit" value="Enviar" class="btn azul dash" />
                 <button class="btn gris dash">Descartar</button>
-                <input type="text" name="message" class="barra" autofocus required placeholder="    Escribe tu mensaje">
+                <input type="text" name="message" placeholder="Escribe tu mensaje" class="barra" autofocus required />
             </form>
         </div>
     </div>
-    
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => window.location = '/<%= ruta %>');
+        </script>
+    <% } %>
 </body>
 
 </html>

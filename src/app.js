@@ -16,8 +16,8 @@ app.set('view engine', 'ejs');
 // Middlewares
 app.use(session ({
     secret: 'miklesession',
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
@@ -28,12 +28,14 @@ app.use('/resources', express.static(__dirname + '/assets'));
 
 
 // Routes
+app.use('/', require('./router/route'));
 app.use('/', require('./router/signup'));
 app.use('/', require('./router/auth'));
-app.use('/', require('./router/cypher'));
+//app.use('/', require('./router/cypher'));
+app.use('/', require('./router/add-contact'));
 
 // Esto no sé donde va
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     if (req.session.logged) {
         res.render('index', {
             login: true,
@@ -55,14 +57,12 @@ app.get('/', (req, res) => {
         });
     }
 });
-
+*/
 app.use((req, res, next) => {
     if (!req.user)
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     next();
 });
-
-app.get('/logout', (req, res) => req.session.destroy(() => res.redirect('login')));
 
 app.listen(app.get('port'), (req, res) => console.log('Servidor en http://localhost:' + app.get('port')));
 

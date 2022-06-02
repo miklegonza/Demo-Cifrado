@@ -8,6 +8,7 @@
     --background: #fff;
     --gris-claro: #E4E4E4;
     --white-text: #eef0f5;
+    --black-text: #222426;
     --titulo: 'Kanit', sans-serif;
     --text: 'Poppins', sans-serif;
     --console: 'Roboto Mono', monospace;
@@ -24,7 +25,6 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--primario);
-    min-width: 73px;
     height: 6rem;
     color: white;
 }
@@ -32,6 +32,10 @@ header {
 a {
     text-decoration: none;
     color: white;
+}
+
+.vinculo {
+    color: var(--black-text);
 }
 
 .logo {
@@ -95,8 +99,10 @@ a {
 .messages {
     margin: 1rem;
     width: calc(100% - 2rem);
-    min-height: calc(100% - 5.5rem);
+    height: calc(100% - 5.5rem);
     background-color: var(--gris-claro);
+    padding: 1.5rem;
+    overflow: auto;
 }
 
 .message-bar {
@@ -106,6 +112,16 @@ a {
     bottom: 0;
     padding: 0 1rem;
     margin-bottom: 1rem;
+}
+
+.message {
+    padding: 1rem;
+    margin: .5rem 3rem;
+    width: fit-content;
+    border-radius: 15px;
+    font-family: var(--text);
+    background-color: var(--white-text);
+    color: var(--black-text);
 }
 
 .btn {
